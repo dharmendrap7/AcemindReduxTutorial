@@ -51,15 +51,9 @@
 	
 	var _redux = __webpack_require__(/*! redux */ 1);
 	
-	var reducer = function reducer(state, action) {
-	    switch (action.type) {
-	        case "ADD":
-	            state = state.action.value;
-	            break;
-	        case "SUBTRACT":
-	            break;
-	    }
-	    return state;
+	var initialState = {
+	    result: 1,
+	    lastValues: []
 	}; // import React from "react";
 	// import {render} from "react-dom";
 	
@@ -92,15 +86,40 @@
 	
 	// render(<App />, window.document.getElementById('app'));
 	
+	var reducer = function reducer() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case "ADD":
+	            state = state + action.payload;
+	            break;
+	        case "SUBTRACT":
+	            state = state - action.payload;
+	            break;
+	    }
+	    return state;
+	};
+	
+	var store = (0, _redux.createStore)(reducer, 1);
+	
 	store.subscribe(function () {
 	    console.log("StoreUpdated: ", store.getState());
 	});
 	
-	var store = (0, _redux.createStore)(reducer, 1);
+	store.dispatch({
+	    type: "ADD",
+	    payload: 100
+	});
 	
 	store.dispatch({
 	    type: "ADD",
-	    payload: 10
+	    payload: 50
+	});
+	
+	store.dispatch({
+	    type: "SUBTRACT",
+	    payload: 25
 	});
 
 /***/ }),

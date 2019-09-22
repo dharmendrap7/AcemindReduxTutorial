@@ -32,13 +32,27 @@
 
 import {createStore} from "redux";
 
-const reducer = (state, action)=>{
+const initialState={
+    result : 1,
+    lastValues : [],
+    userName :"Marry"
+};
+
+const reducer = (state = initialState, action)=>{ // Here state will recieve the values from initialState if state is null, otherwise it will recieve the data from state if state is having any data.
 switch(action.type){
     case "ADD": 
-    state = state + action.payload;
+    state = {
+        ...state,
+        result : state.result + action.payload,
+        lastValues : [...state.lastValues, action.payload]
+    }
     break;
     case "SUBTRACT" : 
-    state = state - action.payload;
+    state ={
+        ...state,
+        result: state.result - action.payload,
+        lastValues : [...state.lastValues, action.payload]
+    } 
     break;
 }
 return state;
@@ -46,7 +60,7 @@ return state;
 
 
 
-const store = createStore(reducer, 1);
+const store = createStore(reducer); // second parameter is required for sending state
 
 store.subscribe(()=> {
     console.log("StoreUpdated: ", store.getState());
