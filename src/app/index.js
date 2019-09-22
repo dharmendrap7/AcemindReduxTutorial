@@ -30,14 +30,39 @@
 
 // render(<App />, window.document.getElementById('app'));
 
-// import {createStore} from "redux";
+import {createStore} from "redux";
 
-// const reducer = (state, action)=>{
-// switch(action.type){
-//     case ADD: break;
-//     case SUBTRACT : break;
-// }
+const reducer = (state, action)=>{
+switch(action.type){
+    case "ADD": 
+    state = state + action.payload;
+    break;
+    case "SUBTRACT" : 
+    state = state - action.payload;
+    break;
+}
+return state;
+};
 
-// };reducd
 
-// const store = createStore(, 1);
+
+const store = createStore(reducer, 1);
+
+store.subscribe(()=> {
+    console.log("StoreUpdated: ", store.getState());
+});
+
+store.dispatch({
+    type: "ADD",
+    payload: 100
+});
+
+store.dispatch({
+    type: "ADD",
+    payload: 50
+});
+
+store.dispatch({
+    type: "SUBTRACT",
+    payload: 25
+});
