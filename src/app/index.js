@@ -95,15 +95,16 @@ const myLogger = (store)=>(next)=>(action)=>{
 const store = createStore(
     combineReducers({mathReducer, userReducer}),
     {},
-    applyMiddleware(myLogger, createLogger())
+    applyMiddleware(createLogger())
 ); //this is being used as key value pair as mathReducer: mathReducer, but because of ES6 syntak it can be shotened as mathReducer. Here two different states are being used as by mathReducer uses math State and userReducer uses user State
 // Here the second parameter for createStore is to pass initial state which can be passed by reducer which has their own initial state.
 //logger is used from redux-logger which logs the actions.
+// no longer custom logger is required as using redux-logger.
 
 //So we are having one global state which has sub state
 
 store.subscribe(()=> {
-    console.log("StoreUpdated: ", store.getState());
+    // console.log("StoreUpdated: ", store.getState()); // Using redux-logger, so no need to subscribe to store.
 });
 
 // The order the dispatch is being used...the same order the state will change
