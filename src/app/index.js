@@ -30,15 +30,19 @@
 
 // render(<App />, window.document.getElementById('app'));
 
-import {createStore} from "redux";
+import {createStore, combineReducers} from "redux";
 
-const initialState={
+// const initialState={
+//     result : 1,
+//     lastValues : [],
+//     userName :"Marry"
+// };
+
+const mathReducer = (state = { // defining here it self with initial values
     result : 1,
     lastValues : [],
     userName :"Marry"
-};
-
-const reducer = (state = initialState, action)=>{ // Here state will recieve the values from initialState if state is null, otherwise it will recieve the data from state if state is having any data.
+}, action)=>{ // Here state will recieve the values from initialState if state is null, otherwise it will recieve the data from state if state is having any data.
 switch(action.type){
     case "ADD": 
     state = {
@@ -58,13 +62,39 @@ switch(action.type){
 return state;
 };
 
+const userReducer = (state = { // defining here it self with initial values
+    name : "Marry",
+    age : 27    
+}, action)=>{ // Here state will recieve the values from initialState if state is null, otherwise it will recieve the data from state if state is having any data.
+switch(action.type){
+    case "SET_NAME": 
+    state = {
+        ...state,
+        name : action.payload
+    }
+    break;
+    case "SET_AGE" : 
+    state ={
+        ...state,
+        age: action.payload
+    } 
+    break;
+}
+return state;
+};
 
 
-const store = createStore(reducer); // second parameter is required for sending state
+
+
+const store = createStore(combineReducers({mathReducer, userReducer})); //this is being used as key value pair as mathReducer: mathReducer, but because of ES6 syntak it can be shotened as mathReducer. Here two different states are being used as by mathReducer uses math State and userReducer uses user State
+
+//So we are having one global state which has sub state
 
 store.subscribe(()=> {
     console.log("StoreUpdated: ", store.getState());
 });
+
+// The order the dispatch is being used...the same order the state will change
 
 store.dispatch({
     type: "ADD",
@@ -80,3 +110,10 @@ store.dispatch({
     type: "SUBTRACT",
     payload: 25
 });
+
+store.dispatch({
+    type: "SET_AGE",
+    payload: 25
+});
+
+
