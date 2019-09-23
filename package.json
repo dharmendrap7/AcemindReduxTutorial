@@ -17,6 +17,7 @@
     "babel-core": "^6.26.3",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
+    "react-redux": "^7.1.1",
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6"
   },
